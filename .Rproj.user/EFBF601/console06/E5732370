@@ -1,0 +1,8 @@
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/Expect[?1034hYouths-MacBook-Air:Expect angrytuzi$ [KYouths-MacBook-Air:Expect angrytuzi$ get init
+bash: get: command not found
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git init
+Initialized empty Git repository in /Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/Expect/.git/
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git add
+Nothing specified, nothing added.
+Maybe you wanted to say 'git add .'?
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git add .
