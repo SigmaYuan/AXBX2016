@@ -2,29 +2,104 @@
 title: "individual expect"
 author: "Xiaomeng"
 date: "7/13/2018"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+# initiate libraries\
+```{r, include = FALSE}
+library(tidyverse)
+library(plyr)
+library(dplyr)
 ```
 
-## Including Plots
+# importe origin data
+```{r, include = FALSE}
+low <- read_csv("/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/subj_rating_LA.csv", na = ".")
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# create a column for repetition numbers
+```{r,  include = FALSE}
+## trial numbers in each phases
+rep1=30
+rep2=32
+rep3=65
+rep4=30
+
+##
+### rep1_1 = 7 + 1
+### rep1_2 = 7 + 1
+### rep1_3 = 7
+### rep1_4 = 7
+r11 = (1:8)
+r12 = (1:8)
+r13 = (1:7)
+r14 = (1:7)
+r1 = c(r11, r12, r13, r14)
+r1
+
+###rep2_1 = 8
+###rep2_2 = 8
+###rep2_3 = 8
+###rep2_4 = 8
+r21 = (1:8)
+r22 = (1:8)
+r23 = (1:8)
+r24 = (1:8)
+r2 = c(r21, r22, r23, r24)
+r2
+
+###rep3_1 = 17
+###rep3_2 = 16
+###rep3_3 = 16
+###rep3_4 = 16
+r31 = (1:17)
+r32 = (1:16)
+r33 = (1:16)
+r34 = (1:16)
+r3 = c(r31, r32, r33, r34)
+r3
+
+
+###rep4_1 = 7 + 1
+###rep4_2 = 7 + 1
+###rep4_3 = 7
+###rep4_4 = 7
+r41 = (1:8)
+r42 = (1:8)
+r43 = (1:7)
+r44 = (1:7)
+r4 = c(r41, r42, r43, r44)
+r4
+
+rep = c(r1, r2, r3, r4)
+View(rep)
+
+# add rep as a new column to low_1
+low_2 <- mutate(low, rep_num = rep)
+View(low_2)
+
+low_s10 <- select(low_2, phase, symbolvec,rep_num, s10)
+```
+
+# data visualization
+```{r}
+# calculate stand deviations
+s10_data <- ddply(low_s10, c("phase", "symbolvec"), summarise,
+               N    = length(s10),
+               mean = mean(s10),
+               sd   = sd(s10),
+               se   = sd / sqrt(N))
+
+# draw bar plot w/ error bars
+pd <- position_dodge(0.9)
+plot_s10 <- ggplot(s10_data, aes(fill = factor(symbolvec), x=phase, y=mean)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  geom_errorbar(aes(x=phase, ymin=mean-sd, ymax=mean+sd, group=factor(symbolvec)), width=0.4, colour="orange", alpha=0.9, size=1, position = pd)
+plot_s10  
+```
+
