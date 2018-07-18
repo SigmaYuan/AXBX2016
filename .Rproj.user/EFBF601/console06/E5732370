@@ -6,3 +6,72 @@ Initialized empty Git repository in /Work/Research/PHD/Dissertation 2017/AXBX_20
 Nothing specified, nothing added.
 Maybe you wanted to say 'git add .'?
 ]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git add .
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git commit -m "fis[Krst commit"
+[master (root-commit) 56119b0] first commit
+ 30 files changed, 1099 insertions(+)
+ create mode 100644 .Rhistory
+ create mode 100644 .Rproj.user/EFBF601/console06/59B8581
+ create mode 100644 .Rproj.user/EFBF601/console06/E5732370
+ create mode 100644 .Rproj.user/EFBF601/console06/E5732370.env
+ create mode 100644 .Rproj.user/EFBF601/console06/INDEX001
+ create mode 100644 .Rproj.user/EFBF601/pcs/files-pane.pper
+ create mode 100644 .Rproj.user/EFBF601/pcs/source-pane.pper
+ create mode 100644 .Rproj.user/EFBF601/pcs/windowlayoutstate.pper
+ create mode 100644 .Rproj.user/EFBF601/pcs/workbench-pane.pper
+ create mode 100644 .Rproj.user/EFBF601/rmd-outputs
+ create mode 100644 .Rproj.user/EFBF601/saved_source_markers
+ create mode 100644 .Rproj.user/EFBF601/sources/prop/4D900DE9
+ create mode 100644 .Rproj.user/EFBF601/sources/prop/7E89A424
+ create mode 100644 .Rproj.user/EFBF601/sources/prop/D3F8EC1B
+ create mode 100644 .Rproj.user/EFBF601/sources/prop/INDEX
+ create mode 100644 .Rproj.user/EFBF601/sources/s-A4487BF9/2F6AD496
+ create mode 100644 .Rproj.user/EFBF601/sources/s-A4487BF9/2F6AD496-contents
+ create mode 100644 .Rproj.user/EFBF601/sources/s-A4487BF9/842D54FE
+ create mode 100644 .Rproj.user/EFBF601/sources/s-A4487BF9/842D54FE-contents
+ create mode 100644 .Rproj.user/EFBF601/sources/s-A4487BF9/D3D898B4
+ create mode 100644 .Rproj.user/EFBF601/sources/s-A4487BF9/D3D898B4-contents
+ create mode 100644 .Rproj.user/EFBF601/sources/s-A4487BF9/lock_file
+ create mode 100644 .Rproj.user/EFBF601/viewer-cache/77AC2DB1.Rdata
+ create mode 100644 .Rproj.user/EFBF601/viewer-cache/979AAD55.Rdata
+ create mode 100644 .Rproj.user/shared/notebooks/A9BEAF51-individual expect/1/s/chunks.json
+ create mode 100644 .Rproj.user/shared/notebooks/patch-chunk-names
+ create mode 100644 .Rproj.user/shared/notebooks/paths
+ create mode 100644 Expect.Rproj
+ create mode 100644 expect.R
+ create mode 100644 individual expect.Rmd
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git remotea[K add origin https://github.com/SigmaYuan/AXBX20 16.git
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git remote -v
+origin	https://github.com/SigmaYuan/AXBX2016.git (fetch)
+origin	https://github.com/SigmaYuan/AXBX2016.git (push)
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git push -u origin master[KYouths-MacBook-Air:Expect angrytuzi$ git push -u origin master
+To https://github.com/SigmaYuan/AXBX2016.git
+ [31m! [rejected]       [m master -> master (fetch first)
+[31merror: failed to push some refs to 'https://github.com/SigmaYuan/AXBX2016.git'
+[m[33mhint: Updates were rejected because the remote contains work that you do[m
+[33mhint: not have locally. This is usually caused by another repository pushing[m
+[33mhint: to the same ref. You may want to first integrate the remote changes[m
+[33mhint: (e.g., 'git pull ...') before pushing again.[m
+[33mhint: See the 'Note about fast-forwards' in 'git push --help' for details.[m
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git pull
+warning: no common commits
+remote: Counting objects: 3, done.[K
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0[K
+Unpacking objects:  33% (1/3)   Unpacking objects:  66% (2/3)   Unpacking objects: 100% (3/3)   Unpacking objects: 100% (3/3), done.
+From https://github.com/SigmaYuan/AXBX2016
+ * [new branch]      master     -> origin/master
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> master
+
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git init
+Reinitialized existing Git repository in /Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/Expect/.git/
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git add
+Nothing specified, nothing added.
+Maybe you wanted to say 'git add .'?
+]0;/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/ExpectYouths-MacBook-Air:Expect angrytuzi$ git add .
