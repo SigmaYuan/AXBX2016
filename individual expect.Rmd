@@ -2,7 +2,10 @@
 title: "individual expect"
 author: "Xiaomeng"
 date: "7/13/2018"
-output: pdf_document
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -21,6 +24,14 @@ library(dplyr)
 low <- read_csv("/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_rating/subj_rating_LA.csv", na = ".")
 
 ```
+
+# arrange by symbolvec 
+```{r}
+low_2 <- low %>% 
+         arrange(phase, symbolvec)
+```
+
+
 
 # create a column for repetition numbers
 ```{r,  include = FALSE}
@@ -80,26 +91,101 @@ rep = c(r1, r2, r3, r4)
 View(rep)
 
 # add rep as a new column to low_1
-low_2 <- mutate(low, rep_num = rep)
-View(low_2)
+low_3 <- mutate(low_2, rep_num = rep)
+View(low_3)
 
-low_s10 <- select(low_2, phase, symbolvec,rep_num, s10)
+
 ```
+
+#Gather sbj into one column
+```{r}
+low_4 <- 
+ low_3 %>% 
+ gather("s10", "s11", "s12", "s13", "s15","s17", "s18", "s19", "s2", "s21",
+       "s24", "s25", "s26", "s27", "s29",
+       "s3", "s34", "s39", "s44", "s5", "s6", "s9", key = "sbj", value = "expect")
+
+
+```
+
+#sum_4 <- ddply(low_4, c("phase", "symbolvec", "sbj"), summarise,
+               N    = length(expect),
+               mean = mean(expect),
+               sd   = sd(expect),
+               se   = sd / sqrt(N))
+               
+               
+#specify which sbj
+```{r}
+
+sbj = 10
+
+low_sbj <- low_4 %>% 
+  filter(sbj == "s10") %>% 
+   select(phase, symbolvec,rep_num, expect)
+
+
+
+```
+
+# decide ABXC
+```{r}
+
+
+# 1 = down, 2 = up, 3 = right, 4 = left
+
+# A=down B=up X=right C=left
+# A = 1, B = 2, X = 3, C = 4
+set1 = c(5, 9, 13, 18, 26, 29, 37, 41, 45, 48, 52)
+  
+set2= c(2, 6, 11, 15, 19, 27, 34, 38, 42, 46, 49, 54)
+
+setI=c(set1, set2)
+
+# A=up B=down X=left C=right
+# A = 2, B = 1, X = 4, C = 3
+  
+set3= c(3, 7, 10, 16, 20, 24, 28, 31, 35, 39, 43)
+  
+set4=c(4, 12, 17, 21, 25, 36, 40, 44, 47, 50)
+
+setII=c(set3, set4)
+
+if (sbj %in% setI)
+ {old = ("1234")
+ new = ("ABXC")
+ symbol = chartr(old, new, low_sbj$symbolvec)
+ data <- low_sbj %>% mutate(symbol=symbol)
+ df <- select(data, phase, symbol, rep_num, expect)
+ }
+
+if (parse_number(sbj) %in% setII)
+ {old = ("1234")
+ new = ("BACX")
+ symbol = chartr(old, new, low_sbj$symbolvec)
+ data <- low_sbj %>% mutate(symbol=symbol)
+ df <- select(data, phase, symbol, rep_num, expect)
+}
+```
+
 
 # data visualization
 ```{r}
 # calculate stand deviations
-s10_data <- ddply(low_s10, c("phase", "symbolvec"), summarise,
-               N    = length(s10),
-               mean = mean(s10),
-               sd   = sd(s10),
+df_sum <- ddply(df, c("phase", "symbol"), summarise,
+               N    = length(expect),
+               mean = mean(expect),
+               sd   = sd(expect),
                se   = sd / sqrt(N))
+
 
 # draw bar plot w/ error bars
 pd <- position_dodge(0.9)
-plot_s10 <- ggplot(s10_data, aes(fill = factor(symbolvec), x=phase, y=mean)) +
+plot_s10 <- df_sum %>% 
+  mutate(symbol = factor(symbol, levels = c("A", "B", "X", "C"))) %>% 
+  ggplot(aes(fill = symbol, x=phase, y=mean)) +
   geom_bar(position = "dodge", stat = "identity") +
-  geom_errorbar(aes(x=phase, ymin=mean-sd, ymax=mean+sd, group=factor(symbolvec)), width=0.4, colour="orange", alpha=0.9, size=1, position = pd)
+  geom_errorbar(aes(x=phase, ymin=mean-sd, ymax=mean+sd, group=factor(symbol)), width=0.4, colour="orange", alpha=0.9, size=1, position = pd)
 plot_s10  
 ```
 
