@@ -197,7 +197,7 @@ plot_s10
 ```{r}
 
 library(lmerTest)
-fit <- lmer(expect ~ phase + symbol + phase * symbol + (rep_num | symbol/phase) 
+fit <- lmer(expect ~ phase + symbol + phase * symbol + (rep_num || symbol/phase) 
               , data=df)
 anova(fit)
 
