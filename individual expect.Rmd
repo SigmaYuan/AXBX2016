@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(plyr)
 library(dplyr)
+library(psycho)
 ```
 
 # importe origin data
@@ -28,7 +29,8 @@ low <- read_csv("/Work/Research/PHD/Dissertation 2017/AXBX_2016/subjective_ratin
 # arrange by symbolvec 
 ```{r}
 low_2 <- low %>% 
-         arrange(phase, symbolvec)
+         arrange(phase, symbolvec)  %>% 
+         mutate(phase = factor(phase, levels = c("1", "2", "3", "4"))) 
 ```
 
 
@@ -118,10 +120,10 @@ low_4 <-
 #specify which sbj
 ```{r}
 
-sbj = 10
+sbj = 15
 
 low_sbj <- low_4 %>% 
-  filter(sbj == "s10") %>% 
+  filter(sbj == "s15") %>% 
    select(phase, symbolvec,rep_num, expect)
 
 
@@ -187,5 +189,79 @@ plot_s10 <- df_sum %>%
   geom_bar(position = "dodge", stat = "identity") +
   geom_errorbar(aes(x=phase, ymin=mean-sd, ymax=mean+sd, group=factor(symbol)), width=0.4, colour="orange", alpha=0.9, size=1, position = pd)
 plot_s10  
+```
+
+# https://neuropsychology.github.io/psycho.R/2018/05/01/repeated_measure_anovas.html
+# https://stats.stackexchange.com/questions/242109/model-failed-to-converge-warning-in-lmer
+## Analysis 
+```{r}
+
+library(lmerTest)
+fit <- lmer(expect ~ phase + symbol + phase * symbol + (rep_num | symbol/phase) 
+              , data=df)
+anova(fit)
+
+#results <- analyze(fit)
+#print(results)
+
+
+```
+
+## Contrast
+```{r}
+results <- fit %>% 
+           get_contrasts("phase * symbol")
+print(results$contrasts)
+```
+
+
+# http://rcompanion.org/handbook/I_09.html
+# determine autocorrelation in residuals 
+```{r}
+library(nlme)
+model.a = lme(expect ~ phase + symbol + phase * symbol,
+              random = ~ rep_num | phase/symbol,
+              data = df)
+v <- ACF(model.a)
+v
+```
+
+# run model
+```{r}
+model= lme(expect ~ phase + symbol + phase * symbol,
+           random = ~ rep_num | phase/symbol,
+           correlation = corAR1(form = ~ rep_num | phase/symbol, value = -0.0698),
+           data = df,
+           method = "REML")
+
+library(car)
+anova(model)  
+```
+
+# determine random effects by comparing model only has fixed effects
+```{r}
+model.fixed = gls(expect ~ phase + symbol + phase * symbol,
+                  data = df,
+                  method = "REML")
+
+compare <- anova(model,
+                 model.fixed)
+compare
+
+```
+
+# multiple comparisons 
+```{r}
+library(multcompView)
+
+library(lsmeans)
+
+marginal = lsmeans(model, 
+                   ~ phase:symbol)
+
+cld(marginal,
+    alpha   = 0.05, 
+    Letters = letters,     ### Use lower-case letters for .group
+    adjust  = "tukey")
 ```
 
